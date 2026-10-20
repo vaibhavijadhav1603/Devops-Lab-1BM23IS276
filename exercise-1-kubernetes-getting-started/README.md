@@ -9,8 +9,14 @@ from the browser.
 | File | Description |
 |------|-------------|
 | `README.md` | Lab record (this file) |
+| `hello-k8s-pod.yaml` | Pod manifest for the `hello-k8s` Pod (nginx image, port 80) |
+| `hello-k8s-service.yaml` | NodePort Service manifest that selects `run=hello-k8s` |
+| `commands.ps1` | All commands used in this exercise, in order |
+| `nginx-welcome.png` | Screenshot of the Nginx welcome page served through the Minikube tunnel |
 
-No YAML files are needed for this exercise. The Pod and Service are created directly with `kubectl` commands.
+The teacher's exercise creates the Pod and Service with `kubectl run` and `kubectl expose` (Method A).
+The same Pod and Service were also written as YAML files and created with `kubectl apply` (Method B).
+Both use the same names (`hello-k8s`) and the same label (`run=hello-k8s`).
 
 ## Environment
 - OS: Windows 11 (PowerShell)
@@ -48,6 +54,16 @@ No YAML files are needed for this exercise. The Pod and Service are created dire
    curl.exe -s http://127.0.0.1:54552
    kubectl get pods -o wide
    kubectl describe pod hello-k8s
+   ```
+7. Delete the Method A resources, then create the same Pod and Service from the YAML files (Method B):
+   ```powershell
+   kubectl delete service hello-k8s
+   kubectl delete pod hello-k8s
+   kubectl apply -f hello-k8s-pod.yaml
+   kubectl wait --for=condition=Ready pod/hello-k8s --timeout=180s
+   kubectl apply -f hello-k8s-service.yaml
+   kubectl get pods,svc -l run=hello-k8s
+   minikube service hello-k8s
    ```
 
 ## Output
@@ -105,6 +121,10 @@ hello-k8s   NodePort   10.100.16.26   <none>        80:31976/TCP   0s
 🎉  Opening service default/hello-k8s in default browser...
 ```
 
+Page at `http://127.0.0.1:54552` (captured with headless Microsoft Edge on this machine):
+
+![Nginx welcome page](nginx-welcome.png)
+
 ### Step 6 - Page fetched from the terminal (`curl.exe -s http://127.0.0.1:54552`, first lines)
 ```
 <!DOCTYPE html>
@@ -157,6 +177,39 @@ Containers:
     Restart Count:  0
 ```
 
+### Step 7 - Method B (YAML files)
+```
+service "hello-k8s" deleted from default namespace
+pod "hello-k8s" deleted from default namespace
+pod/hello-k8s created
+pod/hello-k8s condition met
+service/hello-k8s created
+NAME            READY   STATUS    RESTARTS   AGE
+pod/hello-k8s   1/1     Running   0          5s
+
+NAME                TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+service/hello-k8s   NodePort   10.98.30.241   <none>        80:31073/TCP   0s
+```
+
+`minikube service hello-k8s`, then `curl.exe -s http://127.0.0.1:63635` (title and heading lines)
+```
+┌───────────┬───────────┬─────────────┬───────────────────────────┐
+│ NAMESPACE │   NAME    │ TARGET PORT │            URL            │
+├───────────┼───────────┼─────────────┼───────────────────────────┤
+│ default   │ hello-k8s │ 80          │ http://192.168.49.2:31073 │
+└───────────┴───────────┴─────────────┴───────────────────────────┘
+🔗  Starting tunnel for service hello-k8s.
+┌───────────┬───────────┬─────────────┬────────────────────────┐
+│ NAMESPACE │   NAME    │ TARGET PORT │          URL           │
+├───────────┼───────────┼─────────────┼────────────────────────┤
+│ default   │ hello-k8s │             │ http://127.0.0.1:63635 │
+└───────────┴───────────┴─────────────┴────────────────────────┘
+🎉  Opening service default/hello-k8s in default browser...
+
+<title>Welcome to nginx!</title>
+<h1>Welcome to nginx!</h1>
+```
+
 ## Observations
 - `minikube start` created a single node cluster (`minikube`) running inside a Docker container.
 - `kubectl run` created a single Pod `hello-k8s` with the label `run=hello-k8s`. The Pod was
@@ -166,13 +219,25 @@ Containers:
 - With the Docker driver on Windows the node IP is not reachable from the host directly, so
   `minikube service` opened a tunnel on `http://127.0.0.1:54552` and opened it in the browser.
 - The Nginx welcome page was shown, so the container is running and reachable through the Service.
+- Creating the Pod and Service from YAML files (Method B) gave the same result. Because no
+  `nodePort` is set in `hello-k8s-service.yaml`, Kubernetes picked a new NodePort (`31073`).
 
 ## Result
 The Nginx image was deployed as a Pod on a local Minikube Kubernetes cluster, exposed using a
 NodePort Service, and the Nginx welcome page was accessed successfully from the browser.
 
 ## Cleanup
+The Method A resources were deleted in Step 7. The Method B resources were deleted from the YAML files
+after stopping the `minikube service` tunnel:
 ```powershell
-kubectl delete service hello-k8s
-kubectl delete pod hello-k8s
+kubectl delete -f hello-k8s-service.yaml
+kubectl delete -f hello-k8s-pod.yaml
+kubectl get pods,svc
+```
+Output:
+```
+service "hello-k8s" deleted from default namespace
+pod "hello-k8s" deleted from default namespace
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   7m10s
 ```
