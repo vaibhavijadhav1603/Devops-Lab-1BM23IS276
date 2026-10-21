@@ -212,7 +212,7 @@ Attempt to execute /bin/bash: Exit Code 0, Output:
   working. It only shows what was requested.
 - In `test_restricted_actions.py`, reading `/etc/passwd` and running `/bin/bash` both gave exit code 0.
   On a Linux machine with AppArmor enabled these would be blocked (the exercise expects exit codes 1 and 126).
-- To check properly, look at `docker inspect <container> --format "{{.AppArmorProfile}}"` and try the
+- To check it properly, look at `docker inspect <container> --format "{{.AppArmorProfile}}"` and try the
   restricted action, not just `HostConfig.SecurityOpt`.
 
 ## Result
