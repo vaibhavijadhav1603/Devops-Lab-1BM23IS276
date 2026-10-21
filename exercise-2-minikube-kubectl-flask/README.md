@@ -61,7 +61,7 @@ Notes:
     kubectl logs flask-app-6d58f88547-hvwbs
     ```
     (the pod name is different every time, take it from `kubectl get pods -l app=flask-app`)
-11. Check services
+11. Check the services
     ```powershell
     kubectl get services
     ```
