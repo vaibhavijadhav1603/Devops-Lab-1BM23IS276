@@ -322,7 +322,7 @@ mysql 172.18.0.3/16
 - The new bridge network `my-bridge-net` got the subnet 172.18.0.0/16 with gateway 172.18.0.1.
 - All 3 containers got IPs from this subnet (redis .2, mysql .3, flask .4).
 - From the flask container I could ping `mysql` and `redis` using only their container names. Docker's
-  built in DNS on a user defined bridge network converts the name to the IP (`mysql.my-bridge-net`).
+  built-in DNS on a user defined bridge network converts the name to the IP (`mysql.my-bridge-net`).
 - Only the flask container was published to the host with `-p 5001:5001`. mysql (3306) and redis (6379)
   are only reachable inside the network.
 - For `-p` to work the app inside the container must listen on 0.0.0.0, not 127.0.0.1.
