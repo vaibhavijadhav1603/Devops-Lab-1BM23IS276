@@ -60,6 +60,7 @@ Notes:
     ```powershell
     kubectl logs flask-app-6d58f88547-hvwbs
     ```
+    (the pod name is different every time, take it from `kubectl get pods -l app=flask-app`)
 11. Check services
     ```powershell
     kubectl get services
@@ -75,6 +76,7 @@ Notes:
     minikube service flask-app-service --url
     curl.exe http://127.0.0.1:54995
     ```
+    (54995 is the tunnel port from `minikube service --url`, it changes every time)
 
 ## Output
 

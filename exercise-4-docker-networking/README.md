@@ -60,6 +60,7 @@ Notes (problems I got with the exercise files and how I fixed them):
    docker run -d --name flask --net=my-bridge-net -p 5001:5001 flask-api
    curl.exe -s http://localhost:5001/about
    ```
+   (In PowerShell `curl` is a short name for `Invoke-WebRequest`, so I used `curl.exe` to run the real curl.)
 6. Test connectivity from the flask container
    ```powershell
    docker exec flask ping -c 3 mysql

@@ -78,7 +78,7 @@ Notes (changes from the exercise file):
 ["name=seccomp,profile=builtin","name=cgroupns"]
 6.18.54.1-microsoft-standard-WSL2 | Docker Desktop
 ```
-`/sys/module/apparmor/parameters/enabled`
+`/sys/module/apparmor/parameters/enabled` (Y means AppArmor is on, N means it is off)
 ```
 N
 ```

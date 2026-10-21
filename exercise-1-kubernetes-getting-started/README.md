@@ -50,6 +50,7 @@ Same name `hello-k8s` and label `run=hello-k8s` is used in both.
    kubectl get pods -o wide
    kubectl describe pod hello-k8s
    ```
+   (54552 is the tunnel port I got from `minikube service`. It changes every time, so use the port shown in your own output.)
 7. Delete the pod and service, then create them again using the YAML files
    ```powershell
    kubectl delete service hello-k8s
