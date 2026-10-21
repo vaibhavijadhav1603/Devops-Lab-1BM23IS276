@@ -212,7 +212,7 @@ minikube service hello-k8s and curl http://127.0.0.1:63635 (title and heading li
 - With docker driver on Windows the node IP 192.168.49.2 cannot be opened directly, so
   `minikube service` made a tunnel on 127.0.0.1:54552.
 - The nginx welcome page opened, so the pod is running and the service is working.
-- With the YAML files also it worked the same way. Since I did not give a nodePort in the
+- It worked the same way with the YAML files also. Since I did not give a nodePort in the
   service file, Kubernetes gave a different port (31073).
 
 ## Result
