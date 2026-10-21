@@ -115,7 +115,7 @@ hello-k8s   NodePort   10.100.16.26   <none>        80:31976/TCP   0s
 🎉  Opening service default/hello-k8s in default browser...
 ```
 
-nginx page at http://127.0.0.1:54552 (screenshot taken using Edge headless mode):
+nginx page at http://127.0.0.1:54552:
 
 ![nginx welcome page](nginx-welcome.png)
 

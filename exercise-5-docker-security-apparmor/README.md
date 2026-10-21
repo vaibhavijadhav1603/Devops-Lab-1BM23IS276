@@ -144,7 +144,7 @@ curl.exe -s http://localhost:5000/
 Hello, this is a secure Flask application running inside a Docker container!
 ```
 
-Page at http://localhost:5000/ (screenshot taken using Edge headless mode):
+Page at http://localhost:5000/:
 
 ![flask apparmor app](flask-apparmor.png)
 

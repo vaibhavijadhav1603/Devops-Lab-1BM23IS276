@@ -241,7 +241,7 @@ curl.exe http://127.0.0.1:54995 (from another terminal)
 Hello from Flask on Kubernetes!
 ```
 
-Page at http://127.0.0.1:54995 (screenshot taken using Edge headless mode):
+Page at http://127.0.0.1:54995:
 
 ![flask app output](flask-output.png)
 

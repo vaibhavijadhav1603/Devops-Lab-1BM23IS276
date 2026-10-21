@@ -269,7 +269,7 @@ fffe91182033   mysql     mysql:latest   Up 49 seconds       3306/tcp, 33060/tcp
 4593dbbe51d8   redis     redis:latest   Up About a minute   6379/tcp
 ```
 
-Page at http://localhost:5001/about (screenshot taken using Edge headless mode):
+Page at http://localhost:5001/about:
 
 ![flask about page](flask-about.png)
 
